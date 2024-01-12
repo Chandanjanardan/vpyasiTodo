@@ -1,3 +1,4 @@
+import {BrowserRouter,Routes,Route} from "react-router-dom"
 export default function App() {
   const [user, setUser] = useState(false);
 
@@ -13,15 +14,18 @@ export default function App() {
   }, []); // Ensure that this useEffect runs only once on component mount
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? 'TodoList' : 'Login'}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="TodoList" component={TodoListScreen} />
-        <Stack.Screen name="AddTask" component={AddTaskScreen} />
-        <Stack.Screen name="TaskDetail" component={TaskDetailScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <BrowserRouter>
+    <Routes>
+      <Route initialRouteName={user ? 'TodoList' : 'Login'}>
+        <Route name="Login" component={LoginScreen} />
+        <Route name="Profile" component={ProfileScreen} />
+        <Route name="TodoList" component={TodoListScreen} />
+        <Route name="AddTask" component={AddTaskScreen} />
+        <Route name="TaskDetail" component={TaskDetailScreen} />
+      </Route>
+
+    </Routes>
+    </BrowserRouter>
   );
 }
   
