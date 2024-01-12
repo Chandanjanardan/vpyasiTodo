@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+export default function App() {
+  const [user, setUser] = useState(false);
 
-function App() {
+  const checkLogin = async () => {
+    let temp = await AsyncStorage.getItem('access_token');
+    if (temp) {
+      setUser(true);
+    }
+  };
+
+  useEffect(() => {
+    checkLogin();
+  }, []); // Ensure that this useEffect runs only once on component mount
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={user ? 'TodoList' : 'Login'}>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="TodoList" component={TodoListScreen} />
+        <Stack.Screen name="AddTask" component={AddTaskScreen} />
+        <Stack.Screen name="TaskDetail" component={TaskDetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-export default App;
+  
